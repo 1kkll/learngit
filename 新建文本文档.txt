@@ -1,0 +1,38 @@
+按照wxpush一对一推送优惠券过期通知
+过期天数自定义，默认一天
+
+先判断指定券名，再判断当天各个分类条件
+
+【指定券名】全部显示
+useable[i].limitStr.indexOf('全品类') && useable[i].discount---(可选信息)
+京喜3元 "couponTitle":"京喜超级省钱卡3元无门槛"
+京东5元 "couponTitle":"5.01-5" "platFormInfo":"全平台",
+极速5元 "couponTitle":"5.01-5" "platFormInfo":"京东极速版"
+
+【学生优惠】两天且大于等于一折
+"couponTitle":"学生优惠"
+"couponTitle":"学生专享"
+
+【白条优惠】大于等于一折
+useable[i].couponStyle == 7
+
+【支付立减】大于等于一折
+useable[i].couponStyle == 8
+
+if(useable[i].discount<useable[i].quota)
+	$.message += `【${$.couponType}】满${useable[i].quota}减${useable[i].discount}元`;
+	else
+	$.message += `【${$.couponType}】立减${useable[i].discount}元`;
+
+【极速版券】两天全部显示
+useable[i].couponTitle.indexOf('极速版APP活动')
+
+【全品类券】大于等于一折，且不含黑名单关键词，黑名单关键词启动删除程序,黑名单关键词字段limitStr
+useable[i].limitStr.indexOf('全品类')
+
+【免运费券】全部显示
+极速版运费：useable[i].couponTitle.indexOf('运费') > -1 && useable[i].discount==6 && "platFormInfo":"京东极速版"
+全平台运费：useable[i].couponTitle.indexOf('运费') > -1 && useable[i].discount==6 && "platFormInfo":"全平台"
+
+
+limitStr(成功核发京东联名信用卡)
